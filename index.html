@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Wellcare Pharmacy</title>
+  <meta name="description" content="Modern online pharmacy, symptom guidance, prescriptions, order tracking, and pharmacist support." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://api.fontshare.com/v2/css?f[]=satoshi@300,400,500,700&f[]=cabinet-grotesk@500,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./assets/style.css" />
+</head>
+<body>
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <div class="app-shell">
+    <aside class="sidebar" id="sidebar">
+      <div class="brand">
+        <div class="brand-mark" aria-label="The Wellcare Pharmacy logo">
+          <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <rect x="8" y="8" width="48" height="48" rx="16" stroke="currentColor" stroke-width="4"/>
+            <path d="M20 32H44" stroke="currentColor" stroke-width="4" stroke-linecap="round"/>
+            <path d="M32 20V44" stroke="currentColor" stroke-width="4" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <div>
+          <p class="eyebrow">Trusted Care</p>
+          <h1>The Wellcare Pharmacy</h1>
+        </div>
+      </div>
+
+      <nav class="nav">
+        <button class="nav-link active" data-section="overview">Overview</button>
+        <button class="nav-link" data-section="medicines">Medicine Search</button>
+        <button class="nav-link" data-section="symptoms">Symptom Checker</button>
+        <button class="nav-link" data-section="prescriptions">Prescription Upload</button>
+        <button class="nav-link" data-section="consult">Consult Pharmacist</button>
+        <button class="nav-link" data-section="family">Family Profiles</button>
+        <button class="nav-link" data-section="dashboard">Health Dashboard</button>
+        <button class="nav-link" data-section="emergency">Emergency</button>
+      </nav>
+
+      <div class="sidebar-card">
+        <p class="eyebrow">WellCare Plus</p>
+        <h2>Priority delivery, reports, discounts.</h2>
+        <button class="btn btn-primary" id="openPremium">View plan</button>
+      </div>
+    </aside>
+
+    <div class="content-area">
+      <header class="topbar">
+        <button class="icon-btn mobile-only" id="menuToggle" aria-label="Open navigation">☰</button>
+        <div>
+          <p class="eyebrow">Smart Online Pharmacy & Health Assistant</p>
+          <p class="topbar-copy">Trusted care, delivered to your doorstep.</p>
+        </div>
+        <div class="topbar-actions">
+          <button class="icon-btn" data-theme-toggle aria-label="Switch theme">◐</button>
+          <button class="btn btn-secondary" id="openApiInfo">API structure</button>
+        </div>
+      </header>
+
+      <main id="main-content" class="main-grid">
+        <section class="hero card section-panel" data-panel="overview">
+          <div>
+            <p class="eyebrow">Digital Pharmacy Platform</p>
+            <h2>Search medicines, manage prescriptions, and guide everyday care with confidence.</h2>
+            <p class="lead">This frontend connects cleanly to a Node.js and MongoDB backend for medicines, prescriptions, consultations, reminders, orders, authentication, and dashboards.</p>
+            <div class="hero-actions">
+              <button class="btn btn-primary" data-jump="medicines">Search medicines</button>
+              <button class="btn btn-secondary" data-jump="symptoms">Check symptoms</button>
+            </div>
+          </div>
+          <div class="metrics-grid">
+            <article class="metric-card"><span>2,450+</span><p>Medicines indexed</p></article>
+            <article class="metric-card"><span>24/7</span><p>AI guidance access</p></article>
+            <article class="metric-card"><span>12 min</span><p>Average pharmacist response</p></article>
+            <article class="metric-card"><span>4</span><p>Family profiles supported</p></article>
+          </div>
+        </section>
+
+        <section class="card section-panel" data-panel="medicines">
+          <div class="section-head">
+            <div>
+              <p class="eyebrow">Medicine Search</p>
+              <h2>Search by medicine name, brand, generic, or condition.</h2>
+            </div>
+          </div>
+          <div class="toolbar">
+            <input type="search" id="medicineSearch" placeholder="Try Paracetamol, Cetirizine, Cough Relief..." aria-label="Search medicines" />
+            <select id="medicineCategory" aria-label="Filter medicines">
+              <option value="all">All categories</option>
+              <option value="pain">Pain relief</option>
+              <option value="cold">Cold and flu</option>
+              <option value="digestive">Digestive care</option>
+              <option value="supplements">Supplements</option>
+            </select>
+          </div>
+          <div class="medicine-grid" id="medicineGrid"></div>
+        </section>
+
+        <section class="card section-panel" data-panel="symptoms">
+          <div class="section-head">
+            <div>
+              <p class="eyebrow">Smart Symptom Checker</p>
+              <h2>Describe symptoms in natural language for guidance.</h2>
+            </div>
+          </div>
+          <textarea id="symptomInput" rows="5" placeholder="Example: I have a sore throat, mild fever, headache, and body pain."></textarea>
+          <div class="hero-actions">
+            <button class="btn btn-primary" id="analyzeSymptoms">Analyze symptoms</button>
+            <span class="small-note">Informational only, not a medical diagnosis.</span>
+          </div>
+          <div class="analysis-grid" id="analysisResult"></div>
+        </section>
+
+        <section class="card two-col section-panel" data-panel="prescriptions">
+          <div>
+            <p class="eyebrow">Prescription Upload</p>
+            <h2>Upload JPG, PNG, or PDF prescriptions.</h2>
+            <label class="upload-box" for="prescriptionFile">
+              <input type="file" id="prescriptionFile" accept=".jpg,.jpeg,.png,.pdf" />
+              <span>Choose a prescription file</span>
+              <small>Demo frontend extracts mock medicines into preview.</small>
+            </label>
+            <div id="prescriptionPreview" class="stack-list"></div>
+          </div>
+          <div>
+            <p class="eyebrow">Drug Safety Checker</p>
+            <h2>Review interactions, allergies, duplicates, and restrictions.</h2>
+            <button class="btn btn-secondary" id="runSafetyCheck">Run safety check</button>
+            <div id="safetyWarnings" class="stack-list warning-list"></div>
+          </div>
+        </section>
+
+        <section class="card section-panel" data-panel="consult">
+          <div class="section-head">
+            <div>
+              <p class="eyebrow">Online Pharmacist Consultation</p>
+              <h2>Choose text chat, voice call, or video consultation.</h2>
+            </div>
+          </div>
+          <div class="consult-grid">
+            <button class="mode-card active" data-mode="Text chat">Text chat</button>
+            <button class="mode-card" data-mode="Voice call">Voice call</button>
+            <button class="mode-card" data-mode="Video consultation">Video consultation</button>
+          </div>
+          <form id="consultForm" class="consult-form">
+            <input type="text" id="consultName" placeholder="Patient name" required />
+            <input type="text" id="consultIssue" placeholder="Reason for consultation" required />
+            <button class="btn btn-primary" type="submit">Book consultation</button>
+          </form>
+          <div id="consultStatus" class="status-box"></div>
+        </section>
+
+        <section class="card two-col section-panel" data-panel="family">
+          <div>
+            <p class="eyebrow">Family Health Profiles</p>
+            <h2>Parents, children, spouse, and elderly members in one place.</h2>
+            <form id="familyForm" class="stack-form">
+              <input type="text" id="familyName" placeholder="Full name" required />
+              <input type="text" id="familyRelation" placeholder="Relation" required />
+              <input type="text" id="familyAllergy" placeholder="Allergies / notes" required />
+              <button class="btn btn-primary" type="submit">Add profile</button>
+            </form>
+          </div>
+          <div>
+            <p class="eyebrow">Stored Profiles</p>
+            <div id="familyList" class="stack-list"></div>
+          </div>
+        </section>
+
+        <section class="card section-panel" data-panel="dashboard">
+          <div class="section-head">
+            <div>
+              <p class="eyebrow">Health Dashboard</p>
+              <h2>Track medications, refills, reminders, and recent orders.</h2>
+            </div>
+          </div>
+          <div class="dashboard-grid">
+            <article class="dash-card">
+              <h3>Medication reminders</h3>
+              <ul>
+                <li>8:00 AM — Take 1 tablet after breakfast</li>
+                <li>2:00 PM — Vitamin C supplement</li>
+                <li>9:00 PM — Refill diabetes medicine tomorrow</li>
+              </ul>
+            </article>
+            <article class="dash-card">
+              <h3>Recent orders</h3>
+              <ul>
+                <li>#WC1248 — Packed for dispatch</li>
+                <li>#WC1244 — Out for delivery</li>
+                <li>#WC1231 — Delivered successfully</li>
+              </ul>
+            </article>
+            <article class="dash-card">
+              <h3>Health resources</h3>
+              <ul>
+                <li>Nutrition basics for recovery</li>
+                <li>Cold and flu care at home</li>
+                <li>Medicine safety for elderly users</li>
+              </ul>
+            </article>
+          </div>
+        </section>
+
+        <section class="card section-panel" data-panel="emergency">
+          <div class="section-head">
+            <div>
+              <p class="eyebrow">Emergency Mode</p>
+              <h2>One-click access to nearby help and essential contacts.</h2>
+            </div>
+          </div>
+          <div class="emergency-grid">
+            <article class="emergency-card urgent">
+              <h3>Ambulance</h3>
+              <p>Quick call access for emergencies.</p>
+              <a class="btn btn-primary" href="tel:102">Call 102</a>
+            </article>
+            <article class="emergency-card">
+              <h3>Hospital Finder</h3>
+              <p>Connect this card to maps and location APIs in production.</p>
+              <button class="btn btn-secondary">Open nearby hospitals</button>
+            </article>
+            <article class="emergency-card">
+              <h3>Helpline</h3>
+              <p>National and regional emergency support shortcuts.</p>
+              <a class="btn btn-secondary" href="tel:108">Call 108</a>
+            </article>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+
+  <dialog id="premiumModal" class="modal">
+    <div class="modal-card">
+      <h2>WellCare Plus</h2>
+      <ul>
+        <li>Free delivery on eligible orders</li>
+        <li>Faster pharmacist consultations</li>
+        <li>Monthly health reports</li>
+        <li>Priority support and medicine discounts</li>
+      </ul>
+      <button class="btn btn-primary close-modal">Close</button>
+    </div>
+  </dialog>
+
+  <dialog id="apiModal" class="modal">
+    <div class="modal-card">
+      <h2>Backend connected modules</h2>
+      <p>Authentication, medicines, prescriptions, orders, consultations, reminders, family profiles, dashboards, and emergency resources are scaffolded in the server folder for full-stack development.</p>
+      <button class="btn btn-primary close-modal">Close</button>
+    </div>
+  </dialog>
+
+  <script src="./assets/app.js" defer></script>
+</body>
+</html>

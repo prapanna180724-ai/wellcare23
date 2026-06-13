@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Wellcare Pharmacy</title>
+  <meta name="description" content="Modern online pharmacy platform with symptom guidance, prescription uploads, reminders, consultations, and family health management." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600,700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/svg+xml" href="./assets/favicon.svg">
+  <link rel="stylesheet" href="./assets/css/style.css" />
+  <script defer src="./assets/js/app.js"></script>
+</head>
+<body>
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <div class="app-shell">
+    <aside class="sidebar" id="sidebar">
+      <div class="brand-block">
+        <div class="logo-mark" aria-label="The Wellcare Pharmacy logo">
+          <svg viewBox="0 0 64 64" role="img" aria-hidden="true">
+            <rect x="10" y="10" width="44" height="44" rx="14" fill="none" stroke="currentColor" stroke-width="4"></rect>
+            <path d="M32 19v26M19 32h26" stroke="currentColor" stroke-width="4" stroke-linecap="round"></path>
+            <circle cx="47" cy="17" r="7" fill="currentColor" opacity="0.12"></circle>
+          </svg>
+        </div>
+        <div>
+          <p class="eyebrow">Smart Online Pharmacy</p>
+          <h1>The Wellcare Pharmacy</h1>
+          <p class="tagline">Trusted care, delivered to your doorstep.</p>
+        </div>
+      </div>
+      <nav class="side-nav" aria-label="Primary navigation">
+        <button class="nav-link active" data-section="dashboard">Dashboard</button>
+        <button class="nav-link" data-section="medicines">Search Medicines</button>
+        <button class="nav-link" data-section="symptoms">Symptom Checker</button>
+        <button class="nav-link" data-section="prescriptions">Prescription Upload</button>
+        <button class="nav-link" data-section="consultations">Consult Pharmacist</button>
+        <button class="nav-link" data-section="safety">Drug Safety</button>
+        <button class="nav-link" data-section="family">Family Profiles</button>
+        <button class="nav-link" data-section="reminders">Reminders</button>
+        <button class="nav-link" data-section="articles">Health Articles</button>
+        <button class="nav-link" data-section="emergency">Emergency Mode</button>
+      </nav>
+      <div class="sidebar-card plus-card">
+        <p class="eyebrow">WellCare Plus</p>
+        <h2>Priority support and free delivery</h2>
+        <p>Premium plan with discounts, faster consultations, and monthly health insights.</p>
+        <button class="btn btn-primary" id="openPlusModal">Explore Plus</button>
+      </div>
+    </aside>
+    <div class="main-area">
+      <header class="topbar">
+        <button class="icon-btn mobile-only" id="sidebarToggle" aria-label="Open navigation">☰</button>
+        <div>
+          <p class="topbar-label">Professional digital pharmacy platform</p>
+          <p class="topbar-sub">AI-assisted guidance, licensed-care workflow, and family health management.</p>
+        </div>
+        <div class="topbar-actions">
+          <button class="icon-btn" data-theme-toggle aria-label="Toggle theme">◐</button>
+          <button class="btn btn-secondary" id="openAuthModal">Sign in</button>
+        </div>
+      </header>
+      <main id="main-content" class="content-area">
+        <section class="hero-grid surface-card">
+          <div>
+            <p class="eyebrow">Modern care experience</p>
+            <h2>Professional pharmacy ordering, guidance, and follow-up in one place.</h2>
+            <p>The Wellcare Pharmacy combines medicine search, symptom support, prescription review, refill tracking, family profiles, and pharmacist consultation in a trust-first healthcare interface.</p>
+            <div class="hero-actions">
+              <button class="btn btn-primary" data-jump="medicines">Start medicine search</button>
+              <button class="btn btn-ghost" data-jump="symptoms">Check symptoms</button>
+            </div>
+            <p class="disclaimer">Recommendations are informational only and not a medical diagnosis. Prescription medicines require licensed review before dispensing.</p>
+          </div>
+          <div class="hero-stat-grid">
+            <article class="metric-card"><span>Active medicines</span><strong id="metricMedicines">--</strong></article>
+            <article class="metric-card"><span>Pending orders</span><strong id="metricOrders">--</strong></article>
+            <article class="metric-card"><span>Consultations today</span><strong id="metricConsults">--</strong></article>
+            <article class="metric-card"><span>Refill alerts</span><strong id="metricRefills">--</strong></article>
+          </div>
+        </section>
+
+        <section class="dashboard-grid" id="section-dashboard">
+          <article class="surface-card data-card">
+            <div class="section-head"><h3>Current medications</h3><span class="badge">Live overview</span></div>
+            <ul id="currentMedications" class="stack-list"></ul>
+          </article>
+          <article class="surface-card data-card">
+            <div class="section-head"><h3>Upcoming refills</h3><span class="badge badge-soft">Planner</span></div>
+            <ul id="upcomingRefills" class="stack-list"></ul>
+          </article>
+          <article class="surface-card data-card wide-card">
+            <div class="section-head"><h3>Real-time orders</h3><span class="badge">Order tracking</span></div>
+            <div id="ordersList" class="order-list"></div>
+          </article>
+        </section>
+
+        <section class="panel-grid">
+          <article class="surface-card" id="section-medicines">
+            <div class="section-head"><h3>Search medicines</h3><span class="badge">Name, brand, generic, condition</span></div>
+            <div class="inline-form">
+              <label class="sr-only" for="medicineSearch">Search medicines</label>
+              <input id="medicineSearch" type="search" placeholder="Search Paracetamol, generic name, brand, or condition" />
+              <button class="btn btn-primary" id="searchMedicineBtn">Search</button>
+            </div>
+            <div id="medicineResults" class="results-grid"></div>
+          </article>
+
+          <article class="surface-card" id="section-symptoms">
+            <div class="section-head"><h3>Smart symptom checker</h3><span class="badge badge-warning">AI-assisted</span></div>
+            <label for="symptomText">Describe symptoms in natural language</label>
+            <textarea id="symptomText" rows="5" placeholder="I have a sore throat, mild fever, headache, and body pain."></textarea>
+            <div class="inline-actions">
+              <button class="btn btn-primary" id="symptomCheckBtn">Analyze symptoms</button>
+              <p class="microcopy">Informational output only, with professional care guidance.</p>
+            </div>
+            <div id="symptomOutput" class="result-panel"></div>
+          </article>
+
+          <article class="surface-card" id="section-prescriptions">
+            <div class="section-head"><h3>Prescription upload</h3><span class="badge badge-soft">JPG, PNG, PDF</span></div>
+            <label for="prescriptionFile">Upload prescription file</label>
+            <input id="prescriptionFile" type="file" accept=".jpg,.jpeg,.png,.pdf" />
+            <button class="btn btn-primary" id="uploadPrescriptionBtn">Upload and extract</button>
+            <div id="prescriptionOutput" class="result-panel"></div>
+          </article>
+
+          <article class="surface-card" id="section-consultations">
+            <div class="section-head"><h3>Consult licensed pharmacists</h3><span class="badge">Text, voice, video</span></div>
+            <div id="consultationOptions" class="option-list"></div>
+          </article>
+
+          <article class="surface-card" id="section-safety">
+            <div class="section-head"><h3>AI drug safety checker</h3><span class="badge badge-danger">Before checkout</span></div>
+            <div class="inline-form stack-mobile">
+              <input id="safetyMedicines" type="text" placeholder="Enter medicines separated by commas" />
+              <input id="safetyAllergies" type="text" placeholder="Enter allergies separated by commas" />
+              <select id="safetyAgeGroup">
+                <option value="adult">Adult</option>
+                <option value="child">Child</option>
+                <option value="infant">Infant</option>
+                <option value="toddler">Toddler</option>
+              </select>
+            </div>
+            <button class="btn btn-primary" id="safetyCheckBtn">Run safety check</button>
+            <div id="safetyOutput" class="result-panel"></div>
+          </article>
+
+          <article class="surface-card" id="section-family">
+            <div class="section-head"><h3>Family health profiles</h3><span class="badge">Parents, children, spouse</span></div>
+            <div id="familyProfiles" class="results-grid"></div>
+          </article>
+
+          <article class="surface-card" id="section-reminders">
+            <div class="section-head"><h3>Medicine reminders</h3><span class="badge badge-success">Daily tracking</span></div>
+            <div id="remindersList" class="option-list"></div>
+          </article>
+
+          <article class="surface-card" id="section-articles">
+            <div class="section-head"><h3>Health education resources</h3><span class="badge">Nutrition, fitness, awareness</span></div>
+            <div id="articlesList" class="results-grid"></div>
+          </article>
+
+          <article class="surface-card emergency-card" id="section-emergency">
+            <div class="section-head"><h3>Emergency mode</h3><span class="badge badge-danger">One-click access</span></div>
+            <div id="emergencyList" class="option-list"></div>
+          </article>
+        </section>
+      </main>
+    </div>
+  </div>
+
+  <dialog id="authModal" class="modal">
+    <form method="dialog" class="modal-card" id="authFormCard">
+      <div class="section-head"><h3>Sign in to Wellcare</h3><button class="icon-btn" type="submit" aria-label="Close">✕</button></div>
+      <label for="loginEmail">Email</label>
+      <input id="loginEmail" type="email" value="demo@wellcare.com" />
+      <label for="loginPassword">Password</label>
+      <input id="loginPassword" type="password" value="password123" />
+      <button class="btn btn-primary" type="button" id="loginBtn">Login</button>
+      <p id="authMessage" class="microcopy"></p>
+    </form>
+  </dialog>
+
+  <dialog id="plusModal" class="modal">
+    <form method="dialog" class="modal-card">
+      <div class="section-head"><h3>WellCare Plus</h3><button class="icon-btn" type="submit" aria-label="Close">✕</button></div>
+      <ul class="stack-list compact">
+        <li>Free delivery on eligible orders.</li>
+        <li>Priority pharmacist consultations.</li>
+        <li>Monthly health reports.</li>
+        <li>Exclusive medicine discounts.</li>
+        <li>Priority support across channels.</li>
+      </ul>
+      <p class="disclaimer">Live subscriptions, billing, and regulated medicine programs require backend payment and compliance workflows in production.</p>
+    </form>
+  </dialog>
+</body>
+</html>
